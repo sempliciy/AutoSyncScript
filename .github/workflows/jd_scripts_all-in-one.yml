@@ -1,0 +1,28 @@
+name: jd_scripts_all-in-one
+on:
+  schedule:
+    - cron: '5 */3 * * *'
+  workflow_dispatch:
+  watch:
+    types: started
+  repository_dispatch:
+    types: sync-jd_scripts_all-in-one-GithubSync
+jobs:
+  repo-sync:
+    env:
+      PAT: ${{ secrets.PAT }} 
+    runs-on: ubuntu-latest
+    if: github.event.repository.owner.id == github.event.sender.id
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          persist-credentials: false
+
+      - name: sync jd_scripts_all-in-one-GithubSync
+        uses: repo-sync/github-sync@v2
+        if: env.PAT
+        with:
+          source_repo: "https://github.com/utterliar1/jd_scripts.git"
+          source_branch: "master"
+          destination_branch: "jd_scripts_all-in-one"
+          github_token: ${{ secrets.PAT }}
