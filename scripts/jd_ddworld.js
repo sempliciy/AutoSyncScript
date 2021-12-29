@@ -115,7 +115,7 @@ async function main() {
             await takePostRequest('do_exchange');
             break;
         }else if(oneExchange.times_limit === oneExchange.exchange_total){
-            console.log(`奖励：${oneExchange.name},已完成兑换`);
+            console.log(`奖励：${oneExchange.name},没有兑换次数`);
         }else{
             if(oneExchange.stock >0){
                 console.log(`当前积分：${userScore},需要${oneExchange.coins}积分才能兑换${oneExchange.name}`);
